@@ -1,0 +1,845 @@
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 700;font-display:swap;src:url("/fonts/cormorantgaramond-latin-ext-var.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 700;font-display:swap;src:url("/fonts/cormorantgaramond-latin-var.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url("/fonts/inter-latin-ext-var.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url("/fonts/inter-latin-var.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+:root {
+  --color-primary: #542B35;
+  --color-on-primary: #FFFFFF;
+  --color-accent: #B66B50;
+  --color-surface: #F4EBDD;
+  --color-text: #302522;
+  --color-bg: #E9DFD1;
+  --color-muted: #796B61;
+  --color-bg-alt: color-mix(in srgb, #542B35 6%, #E9DFD1);
+  --color-surface-tint: color-mix(in srgb, #B66B50 10%, #F4EBDD);
+  --color-surface-strong: color-mix(in srgb, #542B35 14%, #F4EBDD);
+  --color-card: color-mix(in srgb, #542B35 7%, #F4EBDD);
+  --color-card-strong: color-mix(in srgb, #B66B50 12%, #F4EBDD);
+  --color-line: color-mix(in srgb, #302522 10%, transparent);
+  --color-line-strong: color-mix(in srgb, #542B35 22%, transparent);
+  --color-nav: color-mix(in srgb, #302522 4%, white);
+  --color-nav-border: color-mix(in srgb, #542B35 12%, transparent);
+  --color-image-placeholder: color-mix(in srgb, #B66B50 9%, #F4EBDD);
+  --font-heading: 'Cormorant Garamond', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* ─── Background systems ─── */
+.jean-bg-mesh {
+  background-image:
+    radial-gradient(at 0% 0%, rgba(84,43,53,0.25) 0%, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(182,107,80,0.22) 0%, transparent 55%),
+    radial-gradient(at 50% 100%, rgba(84,43,53,0.25) 0%, transparent 50%),
+    radial-gradient(at 85% 70%, rgba(182,107,80,0.22) 0%, transparent 45%);
+}
+
+.jean-bg-grid {
+  background-image: radial-gradient(circle, rgba(121,107,97,0.12) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+.jean-bg-spotlight {
+  background-image: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(84,43,53,0.22) 0%, transparent 75%);
+}
+
+/* ─── Card surface styles ─── */
+/* Hero/section-level glass (full blur, applied on hero/cta sections) */
+.jean-glass {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.80);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+/* Card-level glass (reduced blur for dense grids — lower composite cost) */
+.jean-glass-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.75);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.jean-elevated {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 10px 15px -3px rgba(0,0,0,0.10);
+}
+
+.jean-soft-shadow {
+  background: var(--color-card-strong);
+  border: 1px solid var(--color-line-strong);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+}
+
+.jean-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+}
+
+.jean-card-strong {
+  background: var(--color-card-strong);
+  border: 1px solid var(--color-line-strong);
+}
+
+/* 8z46 core-4 — the two card looks that are a SHELL rather than content:
+   outlined is a line and no fill, filled is a fill and no line. Neither carries
+   a shadow, so the pair reads as a choice against the design's card surface. */
+.jean-card-outlined {
+  background: transparent;
+  border: 1px solid var(--color-line-strong);
+  box-shadow: none;
+}
+
+.jean-card-filled {
+  background: var(--color-card-strong);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+/* 8z49 FP-1 — a section a person laid out by hand. Twelve tracks and rows of a
+   named height; the two bands arrive as custom properties so this class can be
+   replaced wholesale below the breakpoint, which an inline declaration could
+   not be. */
+.jean-grid-section {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(var(--jean-grid-row, 1rem), auto);
+  column-gap: var(--jean-grid-gap, 1.5rem);
+  row-gap: 0.5rem;
+  /* 8z49 FP-11 — a cell's z-index (its block's layer) is counted inside the
+     section and nowhere else: a block sent forward cannot cover the header,
+     one sent back cannot drop under the section's own ground. */
+  isolation: isolate;
+}
+
+/* 8z49 FP-10a (D11) — a cell is where a block SITS, not what it fills. Three
+   kinds, from the package's one table (blockCellFit):
+
+     .jean-cell-media    a picture, a video, the mark: laid over the cell by
+                         .jean-cell-fill, so it IS the cell somebody drew and
+                         gives the row no height of its own
+     .jean-cell-box      a card, a group: stretches (a grid item's default) and
+                         grows the rows when its content is taller
+     .jean-cell-content  a heading, a paragraph, a button: its own size, placed
+                         by the justify-items / align-items the cell carries
+
+   Only the fill wrapper and its picture are sized here, never '.jean-grid-cell
+   > *': the canvas hangs its grip and its eight handles on the cell as direct
+   children, and a rule on every child sized those too.
+
+   The history this replaces — every child of a cell at height 100% — is why
+   the owner saw a button stretched across twelve columns and a label in an
+   empty box. What stays true from it:
+
+   Review round 1 measured both halves wrong in the first cut. '> img' could
+   never match: the shared block path wraps every block in a div, so the
+   picture is '.jean-grid-cell div img'. And 'renderImagePrimitive' writes its
+   height INLINE (a band, or max-height:360px), which no stylesheet rule can
+   outrank without !important — so the Zmena 22 logo in a four-row cell
+   painted at 360px with the rest of the cell empty, which is this row's own
+   acceptance failing.
+
+   The SIZE is overridden and the FIT is not: 'objectFit' and 'objectPosition'
+   are keys the owner chose (8z46 QL-23a, deployed) and the cell has no
+   business replacing them. */
+.jean-grid-cell {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  /* 8z49 FP-11 — EVERY cell is positioned, not only a picture's. A picture's
+     cell has to be (its fill is laid over it), and a positioned box paints
+     above every non-positioned one whatever the document order: measured in a
+     browser, a photo covered the words written AFTER it — D3 ("the later
+     block paints on top") broken for exactly the words-over-a-photo case.
+     With every cell positioned, depth is document order and the layer, and
+     nothing else. */
+  position: relative;
+}
+
+.jean-cell-box > *,
+.jean-cell-content > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.jean-cell-media {
+  position: relative;
+}
+
+/* 8z49 D19 — a function's frame (a form, a mount): what it holds stretches
+   across the cell and reflows inside it, never past it. */
+.jean-grid-frame {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* A mount's columns are set by VIEWPORT queries (four people across from
+     1024 px); in a frame a person drew narrower they would stand four across
+     in 390 px. The frame is the container its content answers to instead. */
+  container-type: inline-size;
+}
+
+/* Only ever FEWER columns than the owner chose (review round 1): two across
+   for a list set to three or more — never for a one- or two-column list, or a
+   people LIST layout — and one across below 440 px for all. */
+@container (max-width: 760px) {
+  .jean-grid-frame .jean-widget:is([data-jean-columns="3"], [data-jean-columns="4"], [data-jean-columns="5"]):not([data-jean-people-layout="list"]) .jean-person-grid,
+  .jean-grid-frame .jean-widget:is([data-jean-columns="3"], [data-jean-columns="4"], [data-jean-columns="5"]) .jean-gallery-grid,
+  /* The podněty mount carries no column attribute (review round 2) — its
+     default is three across — so it is lowered unless the owner chose one or two. */
+  .jean-grid-frame .jean-widget:not([data-jean-columns="1"]):not([data-jean-columns="2"]) .jean-suggestion-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@container (max-width: 440px) {
+  /* The same specificity as the rule above and later, so below 440 px one
+     across wins even for a list set to three or more. */
+  .jean-grid-frame .jean-widget:is([data-jean-columns]):not([data-jean-columns="1"]) .jean-person-grid,
+  .jean-grid-frame .jean-widget:is([data-jean-columns]):not([data-jean-columns="1"]) .jean-gallery-grid,
+  .jean-grid-frame .jean-widget:not([data-jean-columns="1"]):not([data-jean-columns="0"]) .jean-suggestion-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+.jean-grid-frame > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* 8z49 FP-12 — a tilted block's wrapper. A grid like the cell it stands in, so
+   a card still stretches to its cell and a heading keeps its own width. */
+.jean-cell-turn {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+}
+
+.jean-cell-fill {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.jean-cell-fill > :first-child {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.jean-cell-fill img,
+.jean-cell-fill iframe,
+.jean-cell-fill video {
+  width: 100%;
+  height: 100% !important;
+  max-height: none !important;
+}
+
+/* D4, amended by D21 — the phone stacks in 'gridPhoneOrder' (the mark first,
+   then bands read left lane first) and releases every height. ONE query,
+   and it is the only place 'order' is ever applied: each cell carries the
+   number as --jean-cell-order, which does nothing at all until here. Above
+   the breakpoint a grid item's 'order' is NOT inert (it paints in
+   order-modified document order), and applying it there re-stacked every
+   overlapping pair — D3 broken by the one declaration meant to be dead. */
+@media (max-width: 767px) {
+  .jean-grid-section {
+    display: flex;
+    flex-direction: column;
+    grid-auto-rows: auto;
+    gap: var(--jean-grid-gap, 1.5rem);
+  }
+
+  .jean-grid-cell {
+    display: block;
+    width: 100%;
+    order: var(--jean-cell-order, 0);
+  }
+
+  /* A picture has no drawn cell on a phone: it stands in the column at its
+     own proportions, the way the flow shows it. */
+  .jean-cell-fill {
+    position: static;
+    display: block;
+  }
+
+  .jean-cell-fill img,
+  .jean-cell-fill iframe,
+  .jean-cell-fill video {
+    height: auto !important;
+  }
+
+  .jean-cell-fill iframe {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* 8z49 D22 — a picture shown whole keeps the height it was drawn at (its
+     rows: one unit and a half-unit gap each), held to its side by its own
+     'objectPosition'. */
+  .jean-cell-contained .jean-cell-fill img {
+    height: var(--jean-cell-drawn-height, auto) !important;
+  }
+}
+
+
+/* 8z46 QL-2 — two more shells. flat is nothing at all: the icon, the title and
+   the words on the section's ground, as the leaflet draws them. elevated is a
+   line and a soft shadow, so the card floats above the ground. */
+.jean-card-flat {
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.jean-card-elevated {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 10px 30px -12px rgba(15,23,42,0.28), 0 2px 6px rgba(15,23,42,0.06);
+}
+
+/* 8z50 ER-10 — story: the blog's card (.jean-blog-card) as a look for any card.
+   Its surface and line; a feature card and the shared card primitive also take
+   its shape (the picture edge to edge on top, the words padded below). */
+.jean-card-story {
+  background: var(--color-card, var(--color-surface));
+  border: 1px solid var(--color-line);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+/* ─── Card behaviors ─── */
+.jean-float {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.jean-float:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.14);
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .jean-float {
+    transition: none;
+  }
+  .jean-float:hover {
+    transform: none;
+  }
+}
+
+/* ─── Structural design tokens ─── */
+/* headingTreatment: underlined — accent underline, works for any alignment */
+.jean-site-shell section h2 {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.4em;
+}
+
+/* lineLanguage: hairline — 1px rules instead of shadows (crisp/technical) */
+.jean-site-shell :is(.jean-card, .jean-card-strong, .jean-elevated, .jean-soft-shadow, .jean-glass-card) {
+  box-shadow: none;
+  border: 1px solid var(--color-line-strong);
+}
+.jean-site-shell .jean-float:hover {
+  box-shadow: none;
+  transform: translateY(-3px);
+}
+
+/* headerBehavior: sticky — in-page anchors clear the pinned header */
+.jean-site-shell section[id],
+.jean-site-shell [id]:not(section):not(body) {
+  scroll-margin-top: 5.5rem;
+}
+
+/* theme.borderRadius — the pictures' corner (8z56 W-6) */
+.jean-site-shell {
+  --jean-radius: 0px;
+  --jean-image-shadow: none;
+}
+
+/* jean-bg-fixed — the background holds still, the page scrolls over it. */
+@media (min-width: 1024px) and (hover: hover) {
+  .jean-site-shell .jean-bg-fixed,
+  .jean-site-shell [data-jean-bg-fixed] { background-attachment: fixed; }
+}
+.jean-site-shell section h1,
+.jean-site-shell section h2 { text-wrap: balance; }
+/* Inside a photo band's scrim card every block must read white. The blocks
+   arrive with their own INLINE color (var(--color-muted) — dark grey), and
+   inline beats any selector, so this is the one place !important is the
+   honest tool rather than a smell: the band owns legibility on top of a
+   photograph, whatever color the block brought with it. */
+.jean-site-shell .jean-photo-band :is(p, li, div, span, blockquote) { color: rgba(255,255,255,0.9) !important; }
+.jean-site-shell .jean-photo-band a { color: #FFFFFF !important; }
+/* The same mechanism for a band painted with --color-primary: the blocks
+   arrive carrying an inline var(--color-text), which is the site's INK — dark
+   ink on a dark primary, light ink on a light one, wrong either way. The band
+   owns legibility on its own fill, so the pair the theme derived wins. */
+.jean-site-shell .jean-on-primary :is(p, li, div, span, blockquote, td, th, summary, h1, h2, h3, h4, h5, h6, strong, em) { color: var(--color-on-primary, #fff) !important; }
+/* A LINK on that band is its own case: it arrives with the site's accent, and
+   the accent on the primary is the one pair the theme cannot make legible
+   (8z46 EL-2b review round 2 measured it as primary-on-primary — invisible).
+   Underlined label ink, which is what a link on a coloured band is everywhere
+   else on the web. */
+.jean-site-shell .jean-on-primary a { color: var(--color-on-primary, #fff) !important; text-decoration: underline; }
+/* 8z46 EL-7 — a block's own width inside a group's grid on the SHARED block
+   path, which emits inline styles and cannot carry a media query. A phone is
+   one track (the group's grid is auto-fit), so a span there would grow an
+   implicit column and scroll the row sideways; above 768px it spans. */
+.jean-site-shell .jean-span { grid-column: auto; }
+@media (min-width: 768px) {
+  .jean-site-shell .jean-span { grid-column: span var(--jean-span, 1); }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.jean-scroll-stage {
+  position: relative;
+  --jean-scroll-progress: 0;
+}
+
+/* Scroll-reveal + parallax are opt-in: only active when the site shell carries
+   data-jean-motion="on" (set from the design's decorationDensity = expressive).
+   With motion off, .jean-motion-layer is inert and content is simply visible —
+   a clean, static baseline instead of every section fading/parallaxing in. */
+.jean-motion-layer {
+  --jean-parallax-offset: 0px;
+}
+
+[data-jean-motion='on'] .jean-motion-layer {
+  opacity: 0;
+  transform: translate3d(0, calc(28px + var(--jean-parallax-offset)), 0) scale(0.985);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+[data-jean-motion='on'] .jean-motion-layer.is-visible {
+  opacity: 1;
+  transform: translate3d(0, var(--jean-parallax-offset), 0) scale(1);
+}
+
+.jean-parallax-up {
+  --jean-parallax-offset: 0px;
+}
+
+.jean-parallax-down {
+  --jean-parallax-offset: 0px;
+}
+
+.jean-parallax-subtle {
+  --jean-parallax-offset: calc(var(--jean-scroll-progress, 0) * -6px);
+}
+
+.jean-panel-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.jean-section-shell {
+  position: relative;
+}
+
+.jean-rhythm-wide {
+  width: min(96rem, calc(100vw - 1.5rem));
+}
+
+.jean-rhythm-tight {
+  width: min(72rem, calc(100vw - 1.5rem));
+}
+
+.jean-gallery-columns,
+.jean-stagger-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.jean-stagger-card {
+  transition-delay: var(--jean-stagger-delay, 0s);
+}
+
+.jean-pullquote-card {
+  position: relative;
+}
+
+.jean-pullquote-card::before {
+  content: '"';
+  position: absolute;
+  top: 0.35rem;
+  left: 1rem;
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 7vw, 6rem);
+  line-height: 0.8;
+  color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  pointer-events: none;
+}
+
+.jean-grid-pattern-row {
+  width: 100%;
+}
+
+.jean-hero-shell {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .jean-panel-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* The 2-column masonry gallery (with an oversized featured first image) is
+     opt-in for expressive designs, and it is opted in per SECTION by the
+     jean-gallery-panel class the renderer adds only when it chose the panel.
+     8z43 WE-4: this used to match every .jean-gallery-columns on a motion-on
+     site, where its (0,2,0) specificity beat the Tailwind lg:grid-cols-N the
+     owner's column knob had set. The default gallery keeps its own Tailwind
+     column classes. */
+  [data-jean-motion='on'] .jean-gallery-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  [data-jean-motion='on'] .jean-gallery-panel .jean-gallery-card--featured {
+    grid-row: span 2;
+  }
+
+  .jean-grid-pattern-row[data-row-centered='true'] {
+    max-width: calc(100% * var(--jean-row-share, 1));
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Sticky panels are opt-in; the default is normal document flow (no full-height
+     sticky hero stage that overrides the whole layout). */
+  [data-jean-motion='on'] .jean-panel-sticky {
+    position: sticky;
+    top: clamp(5rem, 10vh, 7.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Scoped to match the gated hidden rule's specificity so reduced-motion always
+     reveals content even when motion is on. */
+  [data-jean-motion='on'] .jean-motion-layer {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .jean-parallax-up,
+  .jean-parallax-down,
+  .jean-parallax-subtle {
+    --jean-parallax-offset: 0px;
+  }
+
+  .jean-pullquote-card::before {
+    display: none;
+  }
+
+  .jean-float {
+    transition: none;
+  }
+
+  .jean-float:hover {
+    transform: none;
+  }
+}
+
+
+/* V3.4b — the runtime's status slot: muted by default, React's red on error. */
+.jean-site-shell [data-jean-slot='status'] { color: var(--color-muted); }
+.jean-site-shell [data-jean-slot='status'][data-jean-status='error'] { color: #EF4444; }
+
+/* V3.4b part 2 — the shared widget skeletons, painted from theme tokens. */
+.jean-widget-empty { text-align: center; font-size: 0.875rem; color: var(--color-muted); margin: 0; }
+.jean-widget .jean-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+.jean-widget .jean-gallery-item { position: relative; margin: 0; border-radius: var(--jean-radius, 1rem); overflow: hidden; background: var(--color-image-placeholder, var(--color-surface)); }
+.jean-widget .jean-gallery-image { width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+/* 8z43 WE-4 (2) — the owner's gallery knobs, read off the mount (galleryMountAttrs in websiteSpecRenderer). The tiers mirror the static grid's Tailwind classes. */
+.jean-widget[data-jean-columns] .jean-gallery-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.jean-widget[data-jean-columns="4"] .jean-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .jean-widget[data-jean-columns="2"] .jean-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 768px) { .jean-widget[data-jean-columns="3"] .jean-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jean-widget[data-jean-columns="4"] .jean-gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .jean-widget[data-jean-columns="3"] .jean-gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .jean-widget[data-jean-columns="4"] .jean-gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.jean-widget[data-jean-size="s"] .jean-gallery-grid { max-width: 48rem; margin-left: auto; margin-right: auto; }
+.jean-widget[data-jean-size="m"] .jean-gallery-grid { max-width: 64rem; margin-left: auto; margin-right: auto; }
+.jean-widget[data-jean-aspect="square"] .jean-gallery-image { aspect-ratio: 1 / 1; }
+.jean-widget[data-jean-aspect="portrait"] .jean-gallery-image { aspect-ratio: 3 / 4; }
+.jean-widget[data-jean-aspect="landscape"] .jean-gallery-image { aspect-ratio: 16 / 9; }
+.jean-widget[data-jean-aspect="auto"] .jean-gallery-image { aspect-ratio: auto; height: auto; }
+.jean-widget .jean-gallery-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 0.75rem; font-size: 0.875rem; color: #fff; background: linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0)); }
+/* 8z44 BS-2 — the people of an organisation. Round photo, initials when there
+   is none; the grid takes the section's own column count off the mount, the way
+   the gallery's does. The list layout is one per row, photo beside text. */
+.jean-widget .jean-person-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1.5rem; }
+@media (min-width: 640px) { .jean-widget .jean-person-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) {
+  .jean-widget[data-jean-columns="2"] .jean-person-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .jean-widget[data-jean-columns="3"] .jean-person-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .jean-widget[data-jean-columns="4"] .jean-person-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .jean-widget[data-jean-columns="5"] .jean-person-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+.jean-widget[data-jean-people-layout="list"] .jean-person-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.jean-widget[data-jean-people-layout="list"] .jean-person-card { flex-direction: row; text-align: left; align-items: flex-start; }
+.jean-widget .jean-person-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem; padding: 1.5rem; border-radius: 1rem; background: var(--color-surface); border: 1px solid var(--color-line); }
+.jean-widget .jean-person-avatar { width: 7rem; height: 7rem; flex: 0 0 auto; border-radius: 9999px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--color-image-placeholder, var(--color-surface)); }
+.jean-widget .jean-person-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.jean-widget .jean-person-initials { font-size: 1.5rem; font-weight: 600; color: var(--color-primary); }
+.jean-widget .jean-person-name { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 600; color: var(--color-text); margin: 0; }
+.jean-widget .jean-person-role { font-size: 0.875rem; font-weight: 500; color: var(--color-primary); margin: 0; }
+.jean-widget .jean-person-text { font-size: 0.875rem; line-height: 1.6; color: var(--color-muted); margin: 0; }
+.jean-widget .jean-person-date { font-size: 0.8rem; color: var(--color-muted); margin: 0; }
+/* 8z46 core-3 — a people section written as groups keeps them once managed: each
+   run of people under its group's sub-heading, sized like the static walk's group
+   heading (text-2xl, lg:text-3xl, semibold, the heading font, mb-3), so the section
+   does not change shape the day it becomes managed. */
+.jean-widget .jean-person-group + .jean-person-group { margin-top: 2.5rem; }
+.jean-widget .jean-person-group-heading { font-family: var(--font-heading); font-size: 1.5rem; line-height: 2rem; font-weight: 600; color: var(--color-text); margin: 0 0 0.75rem; }
+@media (min-width: 1024px) { .jean-widget .jean-person-group-heading { font-size: 1.875rem; line-height: 2.25rem; } }
+/* PN-3 / 8z44 — the approved podnety. The markup shipped from the first day
+   (freeStyleWidgets.suggestions) and this stylesheet had no rule for a single
+   one of its classes, so a spec site rendered a stranger's photograph, title,
+   words, name and date as one unstyled column of text. Measured on the live
+   campaign site, on the feature the site exists for.
+
+   Three across on a desktop like the people grid beside it, and the same card
+   face (surface, line, radius) so the two read as one site. The photo is a
+   fixed 4/3 crop: podnet photographs arrive from phones in every proportion,
+   and a grid of ragged heights is what made the first draft look broken. */
+.jean-widget .jean-suggestion-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1.5rem; }
+@media (min-width: 640px) { .jean-widget .jean-suggestion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .jean-widget .jean-suggestion-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.jean-widget[data-jean-columns="1"] .jean-suggestion-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+@media (min-width: 1024px) {
+  .jean-widget[data-jean-columns="2"] .jean-suggestion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .jean-widget[data-jean-columns="4"] .jean-suggestion-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.jean-widget .jean-suggestion-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 1rem; background: var(--color-surface); border: 1px solid var(--color-line); }
+.jean-widget .jean-suggestion-photo { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--color-image-placeholder, var(--color-surface)); cursor: zoom-in; }
+.jean-widget .jean-suggestion-body { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.25rem; }
+.jean-widget .jean-suggestion-title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600; color: var(--color-text); margin: 0; }
+/* The visitor's own words, wrapped rather than clamped: a podnet is short by
+   construction and the card that hides half of it is the card nobody trusts. */
+.jean-widget .jean-suggestion-text { font-size: 0.9rem; line-height: 1.6; color: var(--color-text); margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.jean-widget .jean-suggestion-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--color-muted); }
+/* The author and the date were running together into one word on the live
+   site ("Vas Zan Baklazan9. zari 2026") because nothing separated them. */
+.jean-widget .jean-suggestion-author { font-weight: 600; color: var(--color-text); }
+.jean-widget .jean-suggestion-author::after { content: "·"; margin-left: 0.5rem; font-weight: 400; color: var(--color-muted); }
+/* 8z40 PN-8 — Souhlasim. A quiet pill under the card's meta line that fills
+   with the brand colour once this visitor pressed it; the count rides inside
+   it, so "Souhlasim · 12" is one thing to read and one thing to press. The
+   same button stands in the form's similar-podnet prompt, which is outside the
+   widget mount — hence the second selector on each rule. */
+/* 8z40 PN-9 — the site's answer, under the visitor's words and set apart
+   from them: a line in the brand colour down its left edge says "this is the
+   site speaking", which a second card inside the card would overstate. */
+.jean-widget .jean-suggestion-reply { margin-top: 0.5rem; padding: 0.6rem 0 0.1rem 0.85rem; border-left: 3px solid var(--color-primary); }
+.jean-widget .jean-suggestion-reply-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin: 0 0 0.25rem; font-size: 0.8rem; color: var(--color-muted); }
+.jean-widget .jean-suggestion-reply-by { font-weight: 600; color: var(--color-text); }
+.jean-widget .jean-suggestion-reply-by + .jean-suggestion-reply-date::before { content: "·"; margin-right: 0.5rem; }
+.jean-widget .jean-suggestion-reply-text { font-size: 0.9rem; line-height: 1.6; color: var(--color-text); margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.jean-widget .jean-suggestion-actions { margin-top: 0.5rem; }
+.jean-widget .jean-suggestion-agree, .jean-suggestion-similar .jean-suggestion-agree { display: inline-flex; align-items: baseline; padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--color-line); background: transparent; color: var(--color-text); font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+.jean-widget .jean-suggestion-agree:hover, .jean-suggestion-similar .jean-suggestion-agree:hover { border-color: var(--color-primary); }
+.jean-widget .jean-suggestion-agree[aria-pressed="true"], .jean-suggestion-similar .jean-suggestion-agree[aria-pressed="true"] { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary, #fff); }
+.jean-widget .jean-suggestion-agree[data-jean-busy="1"], .jean-suggestion-similar .jean-suggestion-agree[data-jean-busy="1"] { opacity: 0.6; cursor: progress; }
+.jean-suggestion-agree-count { font-weight: 400; white-space: pre; }
+.jean-suggestion-agree-status { color: var(--color-muted); }
+/* 8z40 PN-10 — visitors' replies, approved: quieter than the site's answer
+   (no brand line), each a name, a date and the words. "Odpovedet" sits beside
+   "Souhlasim" as a text button, and its form opens under the card. */
+.jean-widget .jean-suggestion-visitor-replies { margin-top: 0.5rem; display: grid; gap: 0.5rem; }
+.jean-widget .jean-suggestion-visitor-reply { padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: var(--color-surface); }
+.jean-widget .jean-suggestion-visitor-reply-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin: 0 0 0.2rem; font-size: 0.78rem; color: var(--color-muted); }
+.jean-widget .jean-suggestion-visitor-reply-by { font-weight: 600; color: var(--color-text); }
+.jean-widget .jean-suggestion-visitor-reply-by + .jean-suggestion-visitor-reply-date::before { content: "·"; margin-right: 0.5rem; }
+.jean-widget .jean-suggestion-visitor-reply-text { font-size: 0.88rem; line-height: 1.55; color: var(--color-text); margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.jean-widget .jean-suggestion-visitor-replies-more > summary { cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--color-primary); }
+.jean-widget .jean-suggestion-visitor-replies-more[open] > summary { margin-bottom: 0.5rem; }
+.jean-widget .jean-suggestion-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.jean-widget .jean-suggestion-actions > :not(button) { flex-basis: 100%; }
+.jean-widget .jean-suggestion-respond { padding: 0.35rem 0.5rem; border: none; background: transparent; color: var(--color-primary); font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+.jean-widget .jean-suggestion-respond[aria-expanded="true"] { text-decoration: underline; }
+.jean-widget .jean-suggestion-respond-form-input { padding: 0.5rem 0.65rem; border-radius: 0.5rem; border: 1px solid var(--color-line); background: var(--color-bg, transparent); color: var(--color-text); }
+.jean-widget .jean-suggestion-respond-form-note, .jean-widget .jean-suggestion-respond-form-status { color: var(--color-muted); }
+.jean-widget .jean-suggestion-respond-form-submit { padding: 0.45rem 1rem; border-radius: 999px; border: none; background: var(--color-primary); color: var(--color-on-primary, #fff); font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+.jean-widget .jean-suggestion-respond-form[data-jean-busy="1"] .jean-suggestion-respond-form-submit { opacity: 0.6; cursor: progress; }
+.jean-widget .jean-suggestion-note { margin: 1rem 0 0; font-size: 0.78rem; color: var(--color-muted); }
+/* The form's prompt: published podnety that look like the title being typed. */
+.jean-suggestion-similar { margin-top: 0.5rem; padding: 0.75rem 0.9rem; border-radius: 0.75rem; border: 1px solid var(--color-line); background: var(--color-surface); }
+.jean-suggestion-similar[hidden] { display: none; }
+.jean-suggestion-similar-lead { margin: 0 0 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--color-text); }
+.jean-suggestion-similar-item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.3rem 0; }
+.jean-suggestion-similar-title { font-size: 0.85rem; color: var(--color-text); }
+/* The three photo cuts, read off the MOUNT (peopleMountAttrs) — so the managed
+   widget and the static card agree, and an owner who adds a sixteenth candidate
+   in Funkce webu does not watch the section change shape.
+
+   No markup change: round is the default the section was born with and emits
+   nothing here, and the other two are reachable from the same avatar div. */
+.jean-widget[data-jean-photo-style="square"] .jean-person-avatar { border-radius: 1rem; }
+/* cover is the one that changes the CARD. The picture goes full-bleed across
+   the top, so the padding moves off the article and onto the text — otherwise
+   the photograph sits in a 1.5rem frame, which is the thing this style exists
+   to avoid. */
+.jean-widget[data-jean-photo-style="cover"] .jean-person-card { padding: 0 0 1.5rem; gap: 0; overflow: hidden; }
+.jean-widget[data-jean-photo-style="cover"] .jean-person-avatar { width: 100%; height: auto; aspect-ratio: 4 / 3; border-radius: 0; flex: 0 0 auto; }
+.jean-widget[data-jean-photo-style="cover"] .jean-person-body { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; padding: 1.25rem 1.5rem 0; }
+/* A list row keeps its avatar whatever the style says: a cover photograph
+   beside text is not a composition this section has. */
+.jean-widget[data-jean-people-layout="list"][data-jean-photo-style="cover"] .jean-person-card { padding: 1.5rem; gap: 0.75rem; }
+.jean-widget[data-jean-people-layout="list"][data-jean-photo-style="cover"] .jean-person-avatar { width: 7rem; height: 7rem; aspect-ratio: auto; border-radius: 9999px; }
+.jean-widget[data-jean-people-layout="list"][data-jean-photo-style="cover"] .jean-person-body { padding: 0; }
+.jean-widget .jean-menu-group { margin-bottom: 1.75rem; }
+.jean-widget .jean-menu-group:last-child { margin-bottom: 0; }
+.jean-widget .jean-menu-category { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--color-text); margin: 0 0 0.75rem; }
+.jean-widget .jean-menu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.jean-widget .jean-menu-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.jean-widget .jean-menu-name { font-weight: 600; color: var(--color-text); }
+.jean-widget .jean-menu-price { white-space: nowrap; font-weight: 600; color: var(--color-primary); }
+.jean-widget .jean-menu-description { margin: 0.15rem 0 0; font-size: 0.875rem; color: var(--color-muted); }
+/* 8z56 W-5 — a programme, the next event first */
+.jean-widget .jean-events-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.jean-widget .jean-events-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.25rem; border-radius: var(--jean-radius, 1rem); background: var(--color-card); border: 1px solid var(--color-line); }
+.jean-widget .jean-events-image { width: 7rem; height: 5rem; flex-shrink: 0; object-fit: cover; border-radius: var(--jean-radius, .75rem); display: block; }
+.jean-widget .jean-events-body { display: grid; gap: .25rem; min-width: 0; }
+.jean-widget .jean-events-when { margin: 0; display: flex; flex-wrap: wrap; gap: .6rem; font-size: .8rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--color-primary); }
+.jean-widget .jean-events-title { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--color-text); }
+.jean-widget .jean-events-line { margin: 0; color: var(--color-muted); }
+/* 8z66 E-2 — where and by whom */
+.jean-widget .jean-events-place { margin: 0; font-weight: 600; color: var(--color-text); }
+.jean-widget .jean-events-speaker { margin: 0; color: var(--color-muted); }
+.jean-widget .jean-hours-list { list-style: none; margin: 0; padding: 0; }
+.jean-widget .jean-hours-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--color-line); }
+.jean-widget .jean-hours-row:last-child { border-bottom: none; }
+.jean-widget .jean-hours-day { font-weight: 600; color: var(--color-text); }
+.jean-widget .jean-hours-time { color: var(--color-text); }
+.jean-widget .jean-hours-closed { color: var(--color-muted); }
+.jean-widget .jean-hours-note { font-size: 0.85rem; color: var(--color-muted); }
+.jean-widget .jean-downloads-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.jean-widget .jean-downloads-item { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.jean-widget .jean-downloads-link { display: inline-block; padding: 0.55rem 1.1rem; border-radius: 0.6rem; background: var(--color-primary); color: var(--color-on-primary, #fff); font-weight: 600; text-decoration: none; }
+.jean-widget .jean-downloads-link:hover { filter: brightness(0.94); }
+.jean-widget .jean-downloads-meta { font-size: 0.85rem; color: var(--color-muted); }
+/* D-v12 — a placed document's pages, all CSS: the markup is baked and must be
+   right before (and without) JavaScript. T102 ML-2 — every layout stands in
+   one centred box no wider than the readable column, a size step narrower;
+   the strip is the gallery carousel's sheet, each page its own shape. */
+.jean-widget .jean-docpages-sheet { display: flex; flex-direction: column; gap: 1.25rem; max-width: 48rem; margin-left: auto; margin-right: auto; }
+.jean-widget[data-jean-size="m"] .jean-docpages-sheet { max-width: 36rem; }
+.jean-widget[data-jean-size="s"] .jean-docpages-sheet { max-width: 24rem; }
+.jean-widget .jean-docpage { margin: 0; border-radius: 0.9rem; overflow: hidden; background: var(--color-image-placeholder, var(--color-surface)); box-shadow: 0 8px 28px rgba(0,0,0,0.10); }
+.jean-widget .jean-docpage-link { display: block; }
+.jean-widget .jean-docpage-image { display: block; width: 100%; height: auto; }
+.jean-widget .jean-docpages--row .jean-docpages-sheet, .jean-widget .jean-docpages--grid .jean-docpages-sheet { display: grid; gap: 1rem; align-items: start; }
+.jean-widget .jean-docpages--row .jean-docpages-sheet { grid-template-columns: repeat(auto-fit, minmax(min(10rem, 100%), 1fr)); }
+.jean-widget .jean-docpages--grid .jean-docpages-sheet { grid-template-columns: repeat(auto-fit, minmax(calc(50% - 0.5rem), 1fr)); }
+@media (min-width: 1024px) { .jean-widget .jean-docpages--grid.jean-docpages--many .jean-docpages-sheet { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.jean-widget .jean-docpages--carousel .jean-docpages-sheet { display: block; }
+.jean-widget .jean-docpage-text { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 1px solid var(--color-line); }
+.jean-widget .jean-docpage-text-heading { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 1.25rem; }
+/* The announcement strip keeps the React strip's fixed high-contrast tints —
+   attention chrome, deliberately not theme tokens. */
+.jean-widget .jean-announcement { display: flex; align-items: center; gap: 1rem; padding: 0.65rem 1.5rem; font-size: 0.875rem; font-weight: 500; border-bottom: 1px solid; }
+.jean-widget .jean-announcement.is-info { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+.jean-widget .jean-announcement.is-warning { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.jean-widget .jean-announcement.is-success { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+.jean-widget .jean-announcement-text { margin: 0; flex: 1; line-height: 1.45; }
+.jean-widget .jean-announcement-link { color: inherit; font-weight: 600; text-decoration: underline; white-space: nowrap; }
+.jean-widget .jean-occupancy { display: grid; gap: 1.5rem; }
+@media (min-width: 640px) { .jean-widget .jean-occupancy { grid-template-columns: 1fr 1fr; } }
+.jean-widget .jean-occupancy-month { background: var(--color-card, var(--color-surface)); border: 1px solid var(--color-line); border-radius: 1rem; padding: 1rem; }
+.jean-widget .jean-occupancy-title { text-align: center; font-family: var(--font-heading); font-weight: 600; font-size: 1rem; color: var(--color-text); margin: 0 0 0.75rem; }
+.jean-widget .jean-occupancy-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; }
+.jean-widget .jean-occupancy-day { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1; font-size: 0.8rem; border-radius: 0.375rem; border: 1px solid var(--color-line); color: var(--color-text); }
+.jean-widget .jean-occupancy-day.is-booked { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary, #fff); }
+.jean-widget .jean-occupancy-pad { border: none; }
+.jean-widget .jean-occupancy-legend { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 0; font-size: 0.8rem; color: var(--color-muted); }
+.jean-widget .jean-occupancy-key { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 0.2rem; border: 1px solid var(--color-line); margin-right: 0.35rem; vertical-align: -0.1rem; }
+.jean-widget .jean-occupancy-key.is-booked { background: var(--color-primary); border-color: var(--color-primary); }
+.jean-widget .jean-blog-list { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.jean-widget .jean-blog-card { background: var(--color-card, var(--color-surface)); border: 1px solid var(--color-line); border-radius: 1rem; overflow: hidden; display: flex; flex-direction: column; }
+.jean-widget .jean-blog-cover { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+.jean-widget .jean-blog-body { padding: 1rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.jean-widget .jean-blog-date { font-size: 0.75rem; color: var(--color-muted); }
+.jean-widget .jean-blog-title { margin: 0; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-text); }
+.jean-widget .jean-blog-excerpt { margin: 0; font-size: 0.875rem; color: var(--color-muted); line-height: 1.5; }
+.jean-widget .jean-blog-detail summary { cursor: pointer; list-style: none; }
+.jean-widget .jean-blog-link { font-size: 0.875rem; font-weight: 600; color: var(--color-primary); }
+.jean-widget .jean-blog-full { margin-top: 0.5rem; font-size: 0.875rem; color: var(--color-text); white-space: pre-wrap; }
+
+/* layout.edge — the section below draws the edge: its own ground, mirrored (8z80 SD-7) */
+.jean-site-shell {
+  --jean-edge-height: 4rem;
+}
+@media (max-width: 767px) {
+  .jean-site-shell {
+    --jean-edge-height: 2.5rem;
+  }
+}
+.jean-site-shell [data-jean-edge-above]:is(section, footer),
+.jean-site-shell [data-jean-edge-above] > section {
+  position: relative;
+}
+.jean-site-shell [data-jean-edge-above]:is(section, footer)::before,
+.jean-site-shell [data-jean-edge-above]:is(section, footer)::after,
+.jean-site-shell [data-jean-edge-above] > section::before,
+.jean-site-shell [data-jean-edge-above] > section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  transform: translateY(1px) scaleY(-1);
+  background: inherit;
+  pointer-events: none;
+  -webkit-mask: var(--jean-edge-shape) top / 100% calc(var(--jean-edge-height) + 1px) no-repeat;
+  mask: var(--jean-edge-shape) top / 100% calc(var(--jean-edge-height) + 1px) no-repeat;
+}
+.jean-site-shell [data-jean-edge-above]:is(section, footer)::before,
+.jean-site-shell [data-jean-edge-above] > section::before {
+  background: var(--color-bg);
+  -webkit-mask-position: 0 -2px;
+  mask-position: 0 -2px;
+}
+.jean-site-shell [data-jean-edge-below] {
+  isolation: isolate;
+}
+.jean-site-shell .jean-edge-room {
+  padding-block: var(--jean-edge-height);
+}
+.jean-site-shell [data-jean-edge-above="wave"] {
+  --jean-edge-shape: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201440%2064'%20preserveAspectRatio%3D'none'%3E%3Cpath%20transform%3D'translate(0%2064)%20scale(1%20-1)'%20d%3D'M0%2C64%20H1440%20V24%20C1200%2C72%20960%2C72%20720%2C40%20C480%2C8%20240%2C8%200%2C48%20Z'%2F%3E%3C%2Fsvg%3E");
+}
+.jean-site-shell [data-jean-edge-above="curve"] {
+  --jean-edge-shape: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201440%2064'%20preserveAspectRatio%3D'none'%3E%3Cpath%20transform%3D'translate(0%2064)%20scale(1%20-1)'%20d%3D'M0%2C64%20H1440%20V0%20Q720%2C128%200%2C0%20Z'%2F%3E%3C%2Fsvg%3E");
+}
+.jean-site-shell [data-jean-edge-above="slant"] {
+  --jean-edge-shape: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201440%2064'%20preserveAspectRatio%3D'none'%3E%3Cpath%20transform%3D'translate(0%2064)%20scale(1%20-1)'%20d%3D'M0%2C64%20L1440%2C64%20L1440%2C0%20Z'%2F%3E%3C%2Fsvg%3E");
+}
