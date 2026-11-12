@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://sklep-kafe.netlify.app/sitemap.xml
